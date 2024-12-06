@@ -49,13 +49,10 @@ echo "Creating directory structure..." > /dev/null
   chmod -R 755 ~/infra) & spinner
 
 # Step 5: Prompt for NetBird Setup Key
-while true; do
+read -p "Enter your NetBird WT_SETUP_KEY: " WT_SETUP_KEY
+while [ -z "$WT_SETUP_KEY" ]; then
+  echo "NetBird setup key is required. Please enter it."
   read -p "Enter your NetBird WT_SETUP_KEY: " WT_SETUP_KEY
-  if [ -n "$WT_SETUP_KEY" ]; then
-    break
-  else
-    echo "NetBird setup key is required. Please enter it."
-  fi
 done
 
 # Step 6: Generate docker-compose.yml
