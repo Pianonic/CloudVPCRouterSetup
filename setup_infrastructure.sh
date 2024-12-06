@@ -36,7 +36,7 @@ echo -e "${YELLOW}Updating system...${NC}" > /dev/null
 (sudo apt update -y && sudo apt upgrade -y && sudo apt install -y curl git apt-transport-https ca-certificates software-properties-common) & spinner
 wait
 
-# Install Docker
+# Install Docker (Always Latest Version)
 echo -e "\n${YELLOW}Installing Docker...${NC}" > /dev/null
 if ! [ -x "$(command -v docker)" ]; then
   (curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg &&
@@ -44,17 +44,20 @@ if ! [ -x "$(command -v docker)" ]; then
     sudo apt update -y && sudo apt install -y docker-ce docker-ce-cli containerd.io) & spinner
   wait
 else
-  echo -e "${GREEN}Docker is already installed.${NC}" > /dev/null
+  # Always upgrade Docker to the latest version if already installed
+  sudo apt update -y && sudo apt upgrade -y docker-ce docker-ce-cli containerd.io && echo -e "${GREEN}Docker is up to date.${NC}" > /dev/null
 fi
 
-# Install Docker Compose
+# Install Docker Compose (Always Latest Version)
 echo -e "\n${YELLOW}Installing Docker Compose...${NC}" > /dev/null
 if ! [ -x "$(command -v docker-compose)" ]; then
   (sudo curl -L "https://github.com/docker/compose/releases/download/v2.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &&
     sudo chmod +x /usr/local/bin/docker-compose) & spinner
   wait
 else
-  echo -e "${GREEN}Docker Compose is already installed.${NC}" > /dev/null
+  # Always upgrade Docker Compose to the latest version if already installed
+  sudo curl -L "https://github.com/docker/compose/releases/download/v2.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &&
+  sudo chmod +x /usr/local/bin/docker-compose && echo -e "${GREEN}Docker Compose is up to date.${NC}" > /dev/null
 fi
 
 # Generate docker-compose.yml
@@ -78,20 +81,19 @@ services:
       - SYS_MODULE
     privileged: true
 
-  npm-plus:
-    image: zoeyvid/npmplus:latest
-    container_name: npm_plus
+  npmplus:
+    container_name: npmplus
+    image: zoeyvid/npmplus
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
-      - "81:81"
-    environment:
-      - DB_SQLITE_FILE="/data/database.sqlite"
-      - TZ=$(cat /etc/timezone || echo "UTC")
+      - 80:80
+      - 443:443
+      - 81:81
     volumes:
       - ./data:/data
-      - ./npm-plus/letsencrypt:/etc/letsencrypt
+    environment:
+      - TZ=$(cat /etc/timezone || echo "UTC")
+      - ACME_EMAIL=ssl@pianonic.ch
 
 EOF
 
@@ -114,4 +116,3 @@ echo -e "   - HTTPS: ${GREEN}https://<your-server-ip>:443${NC}"
 echo -e "   - NPM-Plus UI: ${GREEN}http://<your-server-ip>:81${NC}\n"
 echo -e "${YELLOW}You need to connect via NetBird to access these services.${NC}"
 echo -e "${YELLOW}Ensure your firewall rules are configured to allow traffic to these ports.${NC}"
-
