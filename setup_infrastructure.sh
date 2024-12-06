@@ -93,9 +93,6 @@ echo -e "${YELLOW}Deploying services...${NC}"
 (cd ~/infra && sudo docker-compose up -d) & spinner
 wait
 
-# Fetch local NetBird container IP address
-NETBIRD_IP=$(sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' netbird)
-
 # Clear the terminal
 clear_terminal
 
@@ -105,8 +102,8 @@ echo -e "\n${GREEN}Installation complete!${NC}\n"
 echo -e "${YELLOW}You can now access the following services:${NC}\n"
 echo -e "1. ${GREEN}NetBird${NC}: NetBird is running and connected to your VPC."
 echo -e "2. ${GREEN}Nginx Proxy Manager (NPM-Plus)${NC}: Access NPM-Plus to manage your proxy settings."
-echo -e "   - HTTP: ${GREEN}http://$NETBIRD_IP:80${NC}"
-echo -e "   - HTTPS: ${GREEN}https://$NETBIRD_IP:443${NC}"
-echo -e "   - NPM-Plus UI: ${GREEN}http://$NETBIRD_IP:81${NC}\n"
+echo -e "   - HTTP: ${GREEN}http://<your-server-ip>:80${NC}"
+echo -e "   - HTTPS: ${GREEN}https://<your-server-ip>:443${NC}"
+echo -e "   - NPM-Plus UI: ${GREEN}http://<your-server-ip>:81${NC}\n"
 echo -e "${YELLOW}You need to connect via NetBird to access these services.${NC}"
 echo -e "${YELLOW}Ensure your firewall rules are configured to allow traffic to these ports.${NC}"
