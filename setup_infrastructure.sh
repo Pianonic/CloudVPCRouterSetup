@@ -20,7 +20,7 @@ spinner() {
 
 echo "Starting installation... This might take a few minutes."
 
-# Debugging prompt to confirm read is working
+# Prompt for NetBird Setup Key
 read -p "Please enter the NetBird WT_SETUP_KEY: " WT_SETUP_KEY
 while [ -z "$WT_SETUP_KEY" ]; then
   echo "NetBird setup key is required. Please enter it."
@@ -105,3 +105,14 @@ echo "Deploying services..." > /dev/null
 (cd ~/infra && sudo docker-compose up -d) & spinner
 
 echo "Installation complete!"
+
+# Informative message about accessing services
+echo "You can now access the following services:"
+echo "1. **NetBird**: NetBird is running and connected to your VPC."
+echo "2. **Nginx Proxy Manager (NPM-Plus)**: Access NPM-Plus to manage your proxy settings."
+echo "   - HTTP: http://your-vpc-public-ip:80"
+echo "   - HTTPS: https://your-vpc-public-ip:443"
+echo "   - NPM-Plus UI: http://your-vpc-public-ip:81"
+echo
+echo "Replace 'your-vpc-public-ip' with the actual public IP of your VPC."
+echo "Ensure your firewall rules are configured to allow traffic to these ports."
