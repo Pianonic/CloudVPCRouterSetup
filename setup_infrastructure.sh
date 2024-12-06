@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 spinner() {
   local pid=$!
   local delay=0.1
-  local spinstr='|/-\'
+  local spinstr='|/-\' 
   while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
     local temp=${spinstr#?}
     printf " [%c]  " "$spinstr"
@@ -111,10 +111,15 @@ echo -e "\n${YELLOW}Deploying services...${NC}" > /dev/null
 (cd ~/infra && sudo docker-compose up -d) & spinner
 wait
 
-# Fetch local NetBird IP address
-NETBIRD_IP=$(hostname -I | awk '{print $1}')
+# Fetch local NetBird container IP address
+NETBIRD_IP=$(sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' netbird)
 
-clear
+# Clear the console reliably
+# You can use `tput` for clearing the screen in a terminal
+tput reset
+
+# Or you can use escape sequences to clear the screen
+# echo -e "\033c"  # ANSI escape code to reset terminal
 
 echo -e "\n${GREEN}Installation complete!${NC}\n"
 
