@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Best script to setup Docker infrastructure for NetBird and Nginx Proxy Manager on Debian
+# Script to setup Docker infrastructure for NetBird and Nginx Proxy Manager on Debian
 
 set -e
 
@@ -20,12 +20,14 @@ spinner() {
 
 echo "Starting installation... This might take a few minutes."
 
-# Prompt for NetBird Setup Key
-read -p "Enter your NetBird WT_SETUP_KEY: " WT_SETUP_KEY
+# Debugging prompt to confirm read is working
+read -p "Please enter the NetBird WT_SETUP_KEY: " WT_SETUP_KEY
 while [ -z "$WT_SETUP_KEY" ]; then
   echo "NetBird setup key is required. Please enter it."
-  read -p "Enter your NetBird WT_SETUP_KEY: " WT_SETUP_KEY
+  read -p "Please enter the NetBird WT_SETUP_KEY: " WT_SETUP_KEY
 done
+
+echo "WT_SETUP_KEY received: $WT_SETUP_KEY"
 
 # Step 1: Update System and Install Required Packages
 echo "Updating system..." > /dev/null
