@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to setup Docker infrastructure for NetBird and Nginx Proxy Manager on Debian
+# Best script to setup Docker infrastructure for NetBird and Nginx Proxy Manager on Debian
 
 set -e
 
@@ -19,6 +19,13 @@ spinner() {
 }
 
 echo "Starting installation... This might take a few minutes."
+
+# Prompt for NetBird Setup Key
+read -p "Enter your NetBird WT_SETUP_KEY: " WT_SETUP_KEY
+while [ -z "$WT_SETUP_KEY" ]; then
+  echo "NetBird setup key is required. Please enter it."
+  read -p "Enter your NetBird WT_SETUP_KEY: " WT_SETUP_KEY
+done
 
 # Step 1: Update System and Install Required Packages
 echo "Updating system..." > /dev/null
@@ -48,14 +55,7 @@ echo "Creating directory structure..." > /dev/null
 (mkdir -p ~/infra/netbird ~/infra/npm-plus/data ~/infra/npm-plus/letsencrypt &&
   chmod -R 755 ~/infra) & spinner
 
-# Step 5: Prompt for NetBird Setup Key
-read -p "Enter your NetBird WT_SETUP_KEY: " WT_SETUP_KEY
-while [ -z "$WT_SETUP_KEY" ]; then
-  echo "NetBird setup key is required. Please enter it."
-  read -p "Enter your NetBird WT_SETUP_KEY: " WT_SETUP_KEY
-done
-
-# Step 6: Generate docker-compose.yml
+# Step 5: Generate docker-compose.yml
 echo "Generating docker-compose.yml..." > /dev/null
 cat <<EOF > ~/infra/docker-compose.yml
 version: '3.8'
@@ -98,7 +98,7 @@ networks:
     driver: bridge
 EOF
 
-# Step 7: Deploy Docker Services
+# Step 6: Deploy Docker Services
 echo "Deploying services..." > /dev/null
 (cd ~/infra && sudo docker-compose up -d) & spinner
 
