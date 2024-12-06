@@ -22,10 +22,6 @@ echo "Starting installation... This might take a few minutes."
 
 # Prompt for NetBird Setup Key
 read -p "Please enter the NetBird WT_SETUP_KEY: " WT_SETUP_KEY
-while [ -z "$WT_SETUP_KEY" ]; do
-  echo "NetBird setup key is required. Please enter it."
-  read -p "Please enter the NetBird WT_SETUP_KEY: " WT_SETUP_KEY
-done
 
 echo "WT_SETUP_KEY received: $WT_SETUP_KEY"
 
