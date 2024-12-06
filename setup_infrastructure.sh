@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 spinner() {
   local pid=$!
   local delay=0.1
-  local spinstr='|/-\' 
+  local spinstr='|/-\'
   while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
     local temp=${spinstr#?}
     printf " [%c]  " "$spinstr"
@@ -32,38 +32,33 @@ read -p "" WT_SETUP_KEY
 echo -e "${GREEN}WT_SETUP_KEY received: $WT_SETUP_KEY${NC}\n"
 
 # Update System and Install Required Packages
-echo -e "${YELLOW}Updating system...${NC}"
+echo -e "${YELLOW}Updating system...${NC}" > /dev/null
 (sudo apt update -y && sudo apt upgrade -y && sudo apt install -y curl git apt-transport-https ca-certificates software-properties-common) & spinner
 wait
 
 # Install Docker
-echo -e "\n${YELLOW}Installing Docker...${NC}"
+echo -e "\n${YELLOW}Installing Docker...${NC}" > /dev/null
 if ! [ -x "$(command -v docker)" ]; then
   (curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg &&
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null &&
     sudo apt update -y && sudo apt install -y docker-ce docker-ce-cli containerd.io) & spinner
   wait
 else
-  echo -e "${GREEN}Docker is already installed.${NC}"
+  echo -e "${GREEN}Docker is already installed.${NC}" > /dev/null
 fi
 
 # Install Docker Compose
-echo -e "\n${YELLOW}Installing Docker Compose...${NC}"
+echo -e "\n${YELLOW}Installing Docker Compose...${NC}" > /dev/null
 if ! [ -x "$(command -v docker-compose)" ]; then
   (sudo curl -L "https://github.com/docker/compose/releases/download/v2.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &&
     sudo chmod +x /usr/local/bin/docker-compose) & spinner
   wait
 else
-  echo -e "${GREEN}Docker Compose is already installed.${NC}"
+  echo -e "${GREEN}Docker Compose is already installed.${NC}" > /dev/null
 fi
 
-# Create Directory Structure
-echo -e "\n${YELLOW}Creating directory structure...${NC}"
-(mkdir -p ~/infra/netbird ~/infra/npm-plus/data ~/infra/npm-plus/letsencrypt && chmod -R 755 ~/infra) & spinner
-wait
-
 # Generate docker-compose.yml
-echo -e "\n${YELLOW}Generating docker-compose.yml...${NC}"
+echo -e "\n${YELLOW}Generating docker-compose.yml...${NC}" > /dev/null
 cat <<EOF > ~/infra/docker-compose.yml
 version: '3.8'
 
@@ -95,21 +90,18 @@ services:
       - DB_SQLITE_FILE="/data/database.sqlite"
       - TZ=$(cat /etc/timezone || echo "UTC")
     volumes:
-      - ./npm-plus/data:/data
+      - ./data:/data
       - ./npm-plus/letsencrypt:/etc/letsencrypt
+
 EOF
 
 # Deploy Docker Services
-echo -e "\n${YELLOW}Deploying services...${NC}"
+echo -e "\n${YELLOW}Deploying services...${NC}" > /dev/null
 (cd ~/infra && sudo docker-compose up -d) & spinner
 wait
 
 # Clear the console reliably
-# You can use `tput` for clearing the screen in a terminal
 tput reset
-
-# Or you can use escape sequences to clear the screen
-# echo -e "\033c"  # ANSI escape code to reset terminal
 
 echo -e "\n${GREEN}Installation complete!${NC}\n"
 
@@ -122,3 +114,4 @@ echo -e "   - HTTPS: ${GREEN}https://<your-server-ip>:443${NC}"
 echo -e "   - NPM-Plus UI: ${GREEN}http://<your-server-ip>:81${NC}\n"
 echo -e "${YELLOW}You need to connect via NetBird to access these services.${NC}"
 echo -e "${YELLOW}Ensure your firewall rules are configured to allow traffic to these ports.${NC}"
+
