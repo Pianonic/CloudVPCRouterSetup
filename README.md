@@ -28,7 +28,7 @@ This script automates the installation and configuration of Docker-based infrast
 To download and execute the script, run the following command:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Pianonic/CloudVPCRouterSetup/refs/heads/main/setup_infrastructure.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Pianonic/CloudVPCRouterSetup/refs/heads/main/setup_infrastructure.sh -o /tmp/setup_infrastructure.sh && chmod +x /tmp/setup_infrastructure.sh && sudo /tmp/setup_infrastructure.sh && rm /tmp/setup_infrastructure.sh
 ```
 
 This command will:
