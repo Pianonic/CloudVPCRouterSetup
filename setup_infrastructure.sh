@@ -111,8 +111,8 @@ echo -e "\n${YELLOW}Deploying services...${NC}" > /dev/null
 (cd ~/infra && sudo docker-compose up -d) & spinner
 wait
 
-# Fetch public IP address
-PUBLIC_IP=$(curl -s ifconfig.me)
+# Fetch local NetBird IP address
+NETBIRD_IP=$(hostname -I | awk '{print $1}')
 
 echo -e "\n${GREEN}Installation complete!${NC}\n"
 
@@ -120,7 +120,8 @@ echo -e "\n${GREEN}Installation complete!${NC}\n"
 echo -e "${YELLOW}You can now access the following services:${NC}\n"
 echo -e "1. ${GREEN}NetBird${NC}: NetBird is running and connected to your VPC."
 echo -e "2. ${GREEN}Nginx Proxy Manager (NPM-Plus)${NC}: Access NPM-Plus to manage your proxy settings."
-echo -e "   - HTTP: ${GREEN}http://$PUBLIC_IP:80${NC}"
-echo -e "   - HTTPS: ${GREEN}https://$PUBLIC_IP:443${NC}"
-echo -e "   - NPM-Plus UI: ${GREEN}http://$PUBLIC_IP:81${NC}\n"
+echo -e "   - HTTP: ${GREEN}http://$NETBIRD_IP:80${NC}"
+echo -e "   - HTTPS: ${GREEN}https://$NETBIRD_IP:443${NC}"
+echo -e "   - NPM-Plus UI: ${GREEN}http://$NETBIRD_IP:81${NC}\n"
+echo -e "${YELLOW}You need to connect via NetBird to access these services.${NC}"
 echo -e "${YELLOW}Ensure your firewall rules are configured to allow traffic to these ports.${NC}"
