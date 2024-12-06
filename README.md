@@ -72,22 +72,5 @@ After the script has finished executing, the following services will be availabl
 
 ---
 
-## Troubleshooting
-
-### 1. **Permissions Issues**
-Ensure you run the script with `sudo` if you do not have root privileges.
-
-```bash
-sudo curl -fsSL https://raw.githubusercontent.com/Pianonic/CloudVPCRouterSetup/refs/heads/main/setup_infrastructure.sh | bash
-```
-
-### 2. **Missing NetBird Setup Key**
-The script will prompt you for the **WT_SETUP_KEY**. If you don't have it, refer to the official NetBird documentation to obtain it.
-
-### 3. **Docker Installation Issues**
-If Docker fails to install, ensure your system supports Docker and check for any network issues blocking the installation.
-
----
-
 By following the instructions, you will have a working infrastructure with **NetBird** and **Nginx Proxy Manager** running on your Debian system, ready for secure VPN and reverse proxy management.
 
