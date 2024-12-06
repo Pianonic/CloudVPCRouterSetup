@@ -114,6 +114,8 @@ wait
 # Fetch local NetBird IP address
 NETBIRD_IP=$(hostname -I | awk '{print $1}')
 
+clear
+
 echo -e "\n${GREEN}Installation complete!${NC}\n"
 
 # Informative message about accessing services
