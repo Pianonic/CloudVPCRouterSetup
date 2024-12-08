@@ -81,6 +81,14 @@ services:
     environment:
       - TZ=$(cat /etc/timezone || echo "Europe/Zurich")
       - ACME_EMAIL=ssl@pianonic.ch
+
+  netbird:
+    container_name: netbird
+    image: netbirdio/netbird:latest  # Replace with the correct NetBird image
+    restart: always
+    environment:
+      - WT_SETUP_KEY=${WT_SETUP_KEY}  # Use the setup key from user input
+    network_mode: host  # Or use a custom network if needed
 EOF
 
 # Deploy Docker Services
@@ -94,9 +102,6 @@ NETBIRD_IP=$(sudo docker exec netbird ip a show wt0 | grep inet | awk '{ print $
 # Clear the console reliably
 # You can use `tput` for clearing the screen in a terminal
 tput reset
-
-# Or you can use escape sequences to clear the screen
-# echo -e "\033c"  # ANSI escape code to reset terminal
 
 echo -e "\n${GREEN}Installation complete!${NC}\n"
 
