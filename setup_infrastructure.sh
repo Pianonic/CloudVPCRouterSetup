@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 spinner() {
   local pid=$!
   local delay=0.1
-  local spinstr='|/-\'
+  local spinstr='|/-\'  
   while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
     local temp=${spinstr#?}
     printf " [%c]  " "$spinstr"
@@ -30,6 +30,11 @@ echo -e "${YELLOW}Starting installation... This might take a few minutes.${NC}"
 echo -e "\n${YELLOW}Please enter the NetBird WT_SETUP_KEY:${NC}"
 read -p "" WT_SETUP_KEY
 echo -e "${GREEN}WT_SETUP_KEY received: $WT_SETUP_KEY${NC}\n"
+
+# Prompt for SSL Email Address for Nginx Proxy Manager (ACME_EMAIL)
+echo -e "${YELLOW}Please enter your email address for the SSL certificate (ACME_EMAIL):${NC}"
+read -p "" ACME_EMAIL
+echo -e "${GREEN}ACME_EMAIL received: $ACME_EMAIL${NC}\n"
 
 # Update System and Install Required Packages
 echo -e "${YELLOW}Updating system...${NC}" > /dev/null
@@ -96,7 +101,7 @@ services:
       - ./data:/data
     environment:
       - TZ=$(cat /etc/timezone || echo "UTC")
-      - ACME_EMAIL=ssl@example.com
+      - ACME_EMAIL=${ACME_EMAIL}
 
 EOF
 
