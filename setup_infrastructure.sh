@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# sScript to setup Docker infrastructure for NetBird and Nginx Proxy Manager on Debian
+# Script to setup Docker infrastructure for NetBird and Nginx Proxy Manager on Debian
 
 set -e
 
