@@ -88,7 +88,6 @@ services:
     restart: always
     environment:
       - WT_SETUP_KEY=${WT_SETUP_KEY}  # Use the setup key from user input
-    network_mode: host  # Or use a custom network if needed
 EOF
 
 # Deploy Docker Services
