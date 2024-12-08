@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to setup Docker infrastructure for NetBird and Nginx Proxy Manager on Debian
+# My Script to setup Docker infrastructure for NetBird and Nginx Proxy Manager on Debian
 
 set -e
 
@@ -59,6 +59,9 @@ else
   sudo curl -L "https://github.com/docker/compose/releases/download/v2.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &&
   sudo chmod +x /usr/local/bin/docker-compose && echo -e "${GREEN}Docker Compose is up to date.${NC}" > /dev/null
 fi
+
+# Create infra directory if it doesn't exist
+mkdir -p ~/infra
 
 # Generate docker-compose.yml
 echo -e "\n${YELLOW}Generating docker-compose.yml...${NC}" > /dev/null
