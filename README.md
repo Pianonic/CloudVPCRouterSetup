@@ -72,5 +72,11 @@ After the script has finished executing, the following services will be availabl
 
 ---
 
-By following the instructions, you will have a working infrastructure with **NetBird** and **Nginx Proxy Manager** running on your Debian system, ready for secure VPN and reverse proxy management.
+## Architecture Diagram
 
+The infrastructure setup consists of several components. The diagram below illustrates the relationships between the **homeserver**, **NetBird VPN connection**, **Nginx Proxy Manager (NPM+)**, and the **internet router**:
+
+![Infrastructure Diagram](https://github.com/Pianonic/CloudVPCRouterSetup/blob/main/img/Diagramm.drawio.png?raw=true)
+
+This setup allows secure connections to your **NetBird** VPN service, proxy management via **Nginx Proxy Manager**, and full access to the internet through the router.
+This should give a clearer overview of the entire infrastructure setup process.
