@@ -73,7 +73,7 @@ After the script has finished executing, the following services will be availabl
    - Use the **WT_SETUP_KEY** to connect devices to the VPN.
 
 2. **Nginx Proxy Manager (NPM+)**:  
-   - The NPM+ UI is available at `http://<your-netbird-ip>:81` for management.
+   - The NPM+ UI is available at `http://<your-netbird-or-router-ip>:81` for management.
    - You can configure reverse proxies, SSL certificates, and much more.
 
 ---
