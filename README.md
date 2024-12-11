@@ -39,6 +39,12 @@ This command will:
 
 When prompted, input your **NetBird WT_SETUP_KEY**. This key is required to set up the NetBird VPN service.
 
+### 3. Enter the SSL Email Address
+
+Next, you will be prompted to enter the **SSL email address (ACME_EMAIL)**. This email is needed for the Nginx Proxy Manager (NPM+) to request SSL certificates via Let's Encrypt.
+
+You will receive a confirmation message once the email has been successfully recorded.
+
 ---
 
 ## Directory Structure
